@@ -4,6 +4,8 @@
 #include <assert.h>
 using namespace std;
 
+
+
 char convertNote(int octave, char noteLetter, char accidentalSign)
 {
       // This check is here solely to report a common CS 31 student error.
@@ -58,104 +60,119 @@ bool trueAccidental(char accurate){
     return false;
 }
 
-bool hasCorrectForm (string song) {
-    //check that the first and last char are accurate
-    
-    int first = song.at(0);
-  //  char check = song.at(i);
-   // for (int i = 0; i != song.size(); i++ ){
-       // char spaces = (song.at(i)=' ');
+bool hasdigit(char numero){
+   if( isdigit(numero))
+   {
+    return true;
+   }
+return false;
+}
 
-       
-  //  }
-    //check for correct start
-    if (first == '#' || first == 'b' || islower(first) || isdigit(first)){
-        cerr<<"incorrect end or start"<<endl;
-        return false;
+bool hasCorrectForm (string song)
+{
+    //check that the first and last char are accurate
+    //makes it ok to have nothin
+
+    if (song.length() == 0)
+    {
+        return true;
     }
+   
     
-    //check that all input characters are accurate
-    for (int i = 0; i != song.size(); i++ ){
-        //int first = song.at(0);
-        char check = song.at(i);
-       
-        //makes it ok to have only spaces
-        if (song.at(0) == ' '){
-            if (check != song.at(0)){
-                break;
+    int size = 0;
+    
+    while (size < song.size())  //continue
+    {
+        char first = song.at(size);
+
+    if (first >= 'A' && first <= 'G')
+    {
+        size++; //1
+        char second = song.at(size);
+        
+        if (trueAccidental(second))
+        {
+            size++;  //2
+            char third = song.at(size);
+            // get back to it
+            //can be tik or digit or error
+            if (hasdigit(third))
+            {
+                size++;
+                continue; //  come back
+               
             }
-            else{
+          
+            else
+            {
+              
+                continue;
+            }
+        }
+       
+        else if (hasdigit(second))
+        {
+            size++;
+            continue;
+        }
+        
+        else if (second == '/')
+        {
+           
+            continue;
+        }
+        
+      
+    }
+        
+        
+    else if(song.at(size) == '/')
+        {
+            if (song.size() == (size+1)){
                 return true;
             }
+            else
+            {
+                size++;
+                continue;
+            }
         }
         
-        //check that it always ends with tik
-        if (song.at(song.size()-1) !='/'){
-            cerr<<"incorrect end or start"<<endl;
-            return false;
-        }
-        
-        //check that inputed characters are allowed
-        if (!isdigit(check) && check != 'C' && check != 'D' && check != 'E' && check != 'F' && check != 'G' && check != 'A' && check != 'B' && check != '/' &&  check != 'b' && check != '#' && check !=' '){
-            cerr<< "Contains unusable character";
-            return false;
-        }
-       //to make sure that every char after an accidental is a letter
-        if (trueAccidental(check) && !(isalpha(song.at(i-1)))) {
-        
-            cerr<<"cant have accidental at first";
-          return false;
             
+        
+        else
+        {
+            return false;
         }
-      }
-       return true;
+       
     }
-        //check that note is in right order
-  
     
-    
-int convertSong(string song, string& instructions, int& badTick){
-    
+    return false;
 }
-}
-                    
-/*int convertSong(string song, string& instructions, int& badTick){
-    if ()
-    return 0;
-}
-*/
 
-int main(){
-
-assert(hasCorrectForm("D5//D/"));
-assert(!hasCorrectForm("D5//Z/"));
-string instrs;
-int badb;
-instrs = "xxx"; badb = -999; // so we can detect whether these get changed
-assert(convertSong("D5//D/", instrs, badb) == 0  &&  instrs == "d y"  &&  badb == -999);
-instrs = "xxx"; badb = -999; // so we can detect whether these get changed
-assert(convertSong("D5//Z/", instrs, badb) == 1  &&  instrs == "xxx"  &&  badb == -999);
-assert(convertSong("D5//D8/", instrs, badb) == 2  &&  instrs == "xxx"  &&  badb == 3);
-
-cerr << "All tests succeeded" << endl;
-//if statement convert song return 0, return 2,
-//
-
-
-string songNotes;
-getline(cin,songNotes);
-if ( hasCorrectForm(songNotes)){
-    convertSong(songNotes);
-    
-/*  if (hasCorrectForm()= false)
+int main()
 {
-    cout<<"ohno";
+    assert(hasCorrectForm("D5//D/"));
+    assert(!hasCorrectForm("D5//Z/"));
+    assert(hasCorrectForm("G/"));
+    assert(hasCorrectForm("A3C#E//E//F#3A3D4/A3C#E/"));
+    assert(hasCorrectForm("////"));
+    assert(!hasCorrectForm("A3C#E//E//O#3A3D4/A3C#E/"));
+    assert(!hasCorrectForm("D5//ZM/"));
+    assert(hasCorrectForm("G3B3DD5//G/A/A3B/C5/B3D5//G//G//CE5//C5/D5/E5/F#5/B3G5//G//G/"));
+    assert(!hasCorrectForm("D3/F#3/A3/D4//D-F#3A3D4/"));
+    
+    
+                        
+    string instrs;
+    int badb;
+    instrs = "xxx"; badb = -999; // so we can detect whether these get changed
+   /* assert(convertSong("D5//D/", instrs, badb) == 0  &&  instrs == "d y"  &&  badb == -999);
+    instrs = "xxx"; badb = -999; // so we can detect whether these get changed
+    assert(convertSong("D5//Z/", instrs, badb) == 1  &&  instrs == "xxx"  &&  badb == -999);
+    assert(convertSong("D5//D8/", instrs, badb) == 2  &&  instrs == "xxx"  &&  badb == 3);
+    …*/
+    cerr << "All tests succeeded" << endl;
+    
+    
 }
-else
-{
-    cout<<"nooo";
-}*/
-}
-            
-}
-
