@@ -53,6 +53,7 @@ char convertNote(int octave, char noteLetter, char accidentalSign)
 //    return s>='A' && s<='G';
 //}
 
+
 bool trueAccidental(char accurate){
     if (accurate == '#' || accurate == 'b'){
         return true;
@@ -179,6 +180,32 @@ bool hasCorrectForm (string song)
     }
     
     return false;
+}
+/*
+ We define a playable note as a note that can be played on the Virtual Piano piano keyboard. (In what follows, we will abide by the customary convention that pairs like C# and Db are equivalent, that E# is equivalent to F in the same octave, as are E and Fb, that B# is equivalent to C in the next higher octave, and that Cb is equivalent to B in the next lower octave.) Thus, the playable notes are
+
+ notes with no digit character. These are considered to be in octave 4, so D and D4 are equivalent, as are F# and F#4.
+ notes with a digit character 2, 3, 4, 5, or 6, except that Cb2 is not a playable note. These notes are considered to be in the indicated octave number.
+ Cb7, representing Cb in the seventh octave, equivalent to B6.
+ C7, representing C in the seventh octave.
+ B#1, representing B# in the first octave, equivalent to C2.
+ */
+
+int convertSong(string song, string& instructions, int& badTick){
+    bool isPlayable = true;
+    if (hasCorrectForm(song))
+    {
+        int sizes = 0;
+        while ( song.size() != sizes)
+        {
+            if (song.at(sizes) == 0 || song.at(sizes) == 1 || song.at(sizes) == 7 || song.at(sizes) == 8 || song.at(sizes) == 9){
+                isPlayable = false;
+            }
+            if (
+        }
+    }
+    
+
 }
 
 int main()
