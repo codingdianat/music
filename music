@@ -84,9 +84,40 @@ bool hasCorrectForm (string song)
     while (size < song.size())  //continue
     {
         char first = song.at(size);
+        
 
+        
+        //convertNote = feed in if it returns space not playable
     if (first >= 'A' && first <= 'G')
     {
+        if (first == 'B'){
+            size ++;
+            char second = song.at(size);
+            if (second == 'b' ){
+                size++;
+                char third = song.at(size);
+            if (third == '1')
+                return false;
+    
+            }
+            size++;
+            continue;
+        }
+        
+        if (first == 'F'){
+            size ++;
+            char second = song.at(size);
+            if (second == '#' ){
+                size++;
+                char third = song.at(size);
+            if (third == '8')
+                return false;
+                
+            }
+            size++;
+            continue;
+        }
+        
         size++; //1
         char second = song.at(size);
         
@@ -118,7 +149,7 @@ bool hasCorrectForm (string song)
         
         else if (second == '/')
         {
-           
+            
             continue;
         }
         
@@ -161,8 +192,10 @@ int main()
     assert(!hasCorrectForm("D5//ZM/"));
     assert(hasCorrectForm("G3B3DD5//G/A/A3B/C5/B3D5//G//G//CE5//C5/D5/E5/F#5/B3G5//G//G/"));
     assert(!hasCorrectForm("D3/F#3/A3/D4//D-F#3A3D4/"));
-    
-    
+    assert(hasCorrectForm("///"));
+    assert(!hasCorrectForm("         "));
+    assert(!hasCorrectForm("DE2EC/ /FEBb1"));
+    assert(!hasCorrectForm("Bb1"));
                         
     string instrs;
     int badb;
